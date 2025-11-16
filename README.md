@@ -23,3 +23,22 @@ Pandas, NumPy
 Matplotlib, Plotly
 
 Jupyter Notebook
+
+
+## Requirements
+
+- Python 3.10 or higher  
+- pip
+
+All dependencies are listed in the `requirements.txt` file.
+
+---
+
+## Installing dependencies
+
+### Via terminal (recommended)
+
+Run the following command in the terminal from the project folder:
+
+```bash
+pip install -r requirements.txt
