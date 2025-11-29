@@ -9,6 +9,6 @@ openpyxl
 plotly
 streamlit
 catboost
-
+joblib
 
 

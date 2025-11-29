@@ -12,6 +12,8 @@ The goal is to build an automated ETL (Extract, Transform, Load) pipeline and ap
 
 📈 Data Analysis and Visualization — generating interactive reports and charts using Pandas, Matplotlib, and Plotly.
 
+🤖 Machine Learning — implementing regression and ensemble models such as RandomForestRegressor, GradientBoostingRegressor, and StackingRegressor, CatBoostRegressor to predict and analyze traffic patterns.
+
 📦 Monthly Aggregation and Reporting — summarizing passenger flow by direction, border crossing, and transport type.
 
 🧰 Technologies
@@ -22,4 +24,17 @@ Pandas, NumPy
 
 Matplotlib, Plotly
 
+Scikit-learn
+
 Jupyter Notebook
+
+
+## Requirements
+
+- Python 3.10 or higher  
+- pip
+
+All dependencies are listed in the `requirements.txt` file.
+
+---
+
