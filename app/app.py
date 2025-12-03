@@ -91,7 +91,17 @@ div[data-baseweb="select"] svg {
 # -------------------------------
 # 1. Загрузка данных для selectbox
 # -------------------------------
-df = pd.read_csv('../data/processed/roud_border_tabel_1.csv')
+#df = pd.read_csv('../data/processed/roud_border_tabel_1.csv')
+import os
+import pandas as pd
+
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))  # путь к app/
+csv_path = os.path.join(BASE_DIR, '..', 'data', 'processed', 'roud_border_tabel_1.csv')
+
+# конвертируем путь в нормальный вид
+csv_path = os.path.normpath(csv_path)
+
+df = pd.read_csv(csv_path)
 
 st.title("🚦 Border Traffic Prediction ")
 
