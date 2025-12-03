@@ -110,8 +110,14 @@ st.title("🚦 Border Traffic Prediction ")
 # -------------------------------
 @st.cache_resource
 def load_model():
-    with open("border_model.pkl", "rb") as f:
-        model = pickle.load(f)
+    # путь к текущему файлу app.py
+    BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+    # путь к модели
+    model_path = os.path.join(BASE_DIR, 'border_model.pkl')
+    model_path = os.path.normpath(model_path)  # нормализуем путь
+    # загружаем модель
+    with open(model_path, 'rb') as f:
+        model = joblib.load(f)
     return model
 
 model = load_model()
