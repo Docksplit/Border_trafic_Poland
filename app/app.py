@@ -3,13 +3,97 @@ import pandas as pd
 import pickle
 from datetime import date
 import numpy as np
+#CSS style------------------------
+st.markdown("""
+<style>
+/* ----- GLOBAL ----- */
+body, .stApp {
+    background-color: #000 !important;
+    color: #fff !important;
+}
+
+/* ----- SIDEBAR ----- */
+[data-testid="stSidebar"] {
+    background-color: #000 !important;
+    color: #fff !important;
+}
+
+/* ----- SELECTBOX, INPUTS ----- */
+div[data-baseweb="select"] > div {
+    background-color: #000 !important;
+    color: #fff !important;
+}
+
+div[data-baseweb="select"] svg {
+    fill: #fff !important;
+}
+
+[data-baseweb="input"] {
+    background-color: #000 !important;
+    color: #fff !important;
+    border-color: #555 !important;
+}
+
+/* ----- BUTTON ----- */
+.stButton>button {
+    background-color: #000 !important;
+    color: #fff !important;
+    border: 1px solid #fff !important;
+    border-radius: 6px;
+    padding: 8px 20px;
+}
+
+.stButton>button:hover {
+    background-color: #111 !important;
+}
+
+/* ----- TABLES (st.dataframe, st.table) ----- */
+[data-testid="stTable"] {
+    background-color: #000 !important;
+}
+
+[data-testid="stTable"] table {
+    background-color: #000 !important;
+    color: #fff !important;
+}
+
+[data-testid="stTable"] th {
+    background-color: #111 !important;
+    color: #fff !important;
+}
+
+[data-testid="stTable"] td {
+    background-color: #000 !important;
+    color: #fff !important;
+}
+
+/* st.dataframe (interactive grid) */
+.stDataFrame div[data-testid="stDataFrame"] {
+    background-color: #000 !important;
+}
+
+.stDataFrame div {
+    color: #fff !important;
+}
+
+.stDataFrame thead tr th {
+    background-color: #111 !important;
+    color: #fff !important;
+}
+
+.stDataFrame tbody tr td {
+    background-color: #000 !important;
+    color: #fff !important;
+}
+</style>
+""", unsafe_allow_html=True)
 
 # -------------------------------
 # 1. Загрузка данных для selectbox
 # -------------------------------
 df = pd.read_csv('../data/processed/roud_border_tabel_1.csv')
 
-st.title("🚦 Border Traffic Prediction – Streamlit App")
+st.title("🚦 Border Traffic Prediction ")
 
 # -------------------------------
 # 2. Load trained model
@@ -55,16 +139,18 @@ kto = kto_reverse[kto_display]
 #-------------------------------------
 kierunek = st.selectbox("Select Kierunek", sorted(df['Kierunek'].unique()))
 #---------------------------------------
-typ_labels = {'MRG': 'Międzynarodowy Ruch Graniczny', 'Paszportowy':'Osoby z paszportem, kontrola paszportowa',
-              'Pozasystemowa':'Osoby/przesyłki poza systemem ewidencji', 'Inny': 'Inny',
-              'Os. w INNYCH': 'Osoby w innych kategoriach/lokalizacjach', 'Razem': 'Razem'}
-typ_reverse = {v:k for k,v in typ_labels.items()}
-typ_display = st.selectbox(
-    'Select Typ',
-    ['Międzynarodowy Ruch Graniczny', 'Osoby z paszportem, kontrola paszportowa',
-     'Osoby/przesyłki poza systemem ewidencji', 'Inny', 'Osoby w innych kategoriach/lokalizacjach', 'Razem' ]
-)
-typ_transportu = typ_reverse[typ_display]
+typ_transportu = 'Razem'
+#-----The average user does not need this choice.-----------------
+#typ_labels = {'MRG': 'Międzynarodowy Ruch Graniczny', 'Paszportowy':'Osoby z paszportem, kontrola paszportowa',
+#              'Pozasystemowa':'Osoby/przesyłki poza systemem ewidencji', 'Inny': 'Inny',
+#              'Os. w INNYCH': 'Osoby w innych kategoriach/lokalizacjach', 'Razem': 'Razem'}
+#typ_reverse = {v:k for k,v in typ_labels.items()}
+#typ_display = st.selectbox(
+#    'Select Typ',
+#    ['Międzynarodowy Ruch Graniczny', 'Osoby z paszportem, kontrola paszportowa',
+#     'Osoby/przesyłki poza systemem ewidencji', 'Inny', 'Osoby w innych kategoriach/lokalizacjach', 'Razem' ]
+#)
+#typ_transportu = typ_reverse[typ_display]
 #typ_transportu = st.selectbox("Select Typ transportu", sorted(df['Typ transportu'].unique()))
 
 # -------------------------------
