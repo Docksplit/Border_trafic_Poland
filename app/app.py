@@ -201,3 +201,52 @@ if st.button("🔮 Oblicz prognozę"):
     log_prediction = model.predict(input_df)[0]      # модель предсказывает логарифм
     prediction = np.exp(log_prediction)              # преобразуем обратно в число людей
     st.success(f"📈 Prognozowana liczba osób: **{prediction:.0f}**")
+
+    # ---------- GRAFIK NA ±7 DNI ----------
+    st.subheader("📊 Prognoza ± 7 dni")
+
+    date_range = pd.date_range(
+        start=selected_date - pd.Timedelta(days=7),
+        end=selected_date + pd.Timedelta(days=7),
+        freq="D"
+    )
+
+    records = []
+
+    for d in date_range:
+        df_temp = input_df.copy()
+        df_temp["day"] = d.day
+        df_temp["month"] = d.month
+        df_temp["weekday"] = d.weekday()
+
+        log_val = model.predict(df_temp)[0]
+        val = np.exp(log_val)
+
+        records.append([d, val])
+
+    plot_df = pd.DataFrame(records, columns=["date", "prediction"])
+    plot_df.set_index("date", inplace=True)
+
+    # --- ZAMIANA ST.line_chart NA ALTair ---
+    import altair as alt
+
+    # linia prognozy
+    line = alt.Chart(plot_df.reset_index()).mark_line(color='blue').encode(
+        x='date:T',
+        y='prediction:Q'
+    )
+
+    # czerwona kropka dla wybranego dnia
+    highlight = alt.Chart(pd.DataFrame({
+        "date": [pd.Timestamp(selected_date)],
+        "prediction": [plot_df.loc[pd.Timestamp(selected_date), "prediction"]]
+    })).mark_point(color='red', size=100).encode(
+        x='date:T',
+        y='prediction:Q'
+    )
+
+    # łączymy linie i punkt
+    chart = line + highlight
+
+    st.altair_chart(chart, use_container_width=True)
+    st.caption("🔴 Czerwona kropka pokazuje prognozę dla wybranego dnia.")
